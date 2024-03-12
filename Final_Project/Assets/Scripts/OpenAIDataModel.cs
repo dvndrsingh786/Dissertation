@@ -12,6 +12,7 @@ public class OpenAIDataModel
 [Serializable]
 public class GenerateImageRequestModel
 {
+    public string model;
     public string prompt;
     public int n;
     public string size;
@@ -19,8 +20,9 @@ public class GenerateImageRequestModel
     string API_KEY = Utility.API_KEY;//"sk-xxxxxx";
     string ORGANISATION_KEY = Utility.ORGANIZATION_KEY;//"org-xxxxxx";
 
-    public GenerateImageRequestModel(string _prompt, int _n, string _size)
+    public GenerateImageRequestModel(string _model, string _prompt, int _n, string _size)
     {
+        model = _model;
         prompt = _prompt;
         n = _n;
         size = _size;

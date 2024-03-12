@@ -175,7 +175,7 @@ public class InpaintingDemo : MonoBehaviour
     private void GenerateImage(string description, string resolution, Action<List<string>> completationAction)
     {
 
-        GenerateImageRequestModel reqModel = new GenerateImageRequestModel(description, 1 , resolution);
+        GenerateImageRequestModel reqModel = new GenerateImageRequestModel("dall-e-3", description, 1 , resolution);
         ApiCall.instance.PostRequest<GenerateImageResponseModel>(IMAGE_GENERTION_API_URL, reqModel.ToCustomHeader(), null, reqModel.ToBody(), (result =>
         {
             loadTexture(result.data, completationAction);

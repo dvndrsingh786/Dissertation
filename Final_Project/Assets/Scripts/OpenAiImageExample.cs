@@ -29,7 +29,8 @@ public class OpenAiImageExample : MonoBehaviour
 		}
 
 		string description = inputText.text;
-		string resolution = "256x256"; // Possible Resolution 256x256, 512x512, or 1024x1024.
+		string resolution = "1024x1024"; // Possible Resolution 256x256, 512x512, or 1024x1024.
+		//string resolution = "256x256"; // Possible Resolution 256x256, 512x512, or 1024x1024.
 
 		GenerateImage(description, resolution, () => {
 			loadingpanel.SetActive(false);
@@ -40,7 +41,7 @@ public class OpenAiImageExample : MonoBehaviour
 	public void GenerateImage(string description, string resolution, Action completationAction)
 	{
 
-		GenerateImageRequestModel reqModel = new GenerateImageRequestModel(description, 1 ,resolution);
+		GenerateImageRequestModel reqModel = new GenerateImageRequestModel("dall-e-3", description, 1 ,resolution);
 		ApiCall.instance.PostRequest<GenerateImageResponseModel>(IMAGE_GENERTION_API_URL, reqModel.ToCustomHeader(), null, reqModel.ToBody(), (result =>
 		{
 			loadTexture(result.data, completationAction);
