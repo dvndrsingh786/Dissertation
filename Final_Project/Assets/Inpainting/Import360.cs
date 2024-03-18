@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //using Crosstales.FB;
-using UnityEditor;
+//using UnityEditor;
 using System.IO;
 
 public class Import360 : MonoBehaviour
@@ -97,12 +97,12 @@ public class Import360 : MonoBehaviour
         Cubemap cube2d = Resources.Load<Cubemap>("SVLevels/av26");
 
         string path = "Assets/Resources/SVLevels/av26.jpg";
-        TextureImporter importer = (TextureImporter)TextureImporter.GetAtPath(path);
-        if (cube2d != null && cube2d.dimension == UnityEngine.Rendering.TextureDimension.Cube)
-        {
-            importer.textureShape = TextureImporterShape.Texture2D;
-            importer.SaveAndReimport();
-        }
+        //TextureImporter importer = (TextureImporter)TextureImporter.GetAtPath(path);
+        //if (cube2d != null && cube2d.dimension == UnityEngine.Rendering.TextureDimension.Cube)
+        //{
+        //    importer.textureShape = TextureImporterShape.Texture2D;
+        //    importer.SaveAndReimport();
+        //}
 
 
         StartCoroutine(SetSkyBoxMaterialIEnum(texturePath));
@@ -121,12 +121,12 @@ public class Import360 : MonoBehaviour
         File.WriteAllBytes(Application.dataPath + "/Resources/SVLevels/av26.jpg", imData);
 
         //Change the texture to cubemap:
-        TextureImporter importer = (TextureImporter)TextureImporter.GetAtPath(resourcePath);
-        if (tex2d != null && tex2d.dimension != UnityEngine.Rendering.TextureDimension.Cube)
-        {
-            importer.textureShape = TextureImporterShape.TextureCube;
-            importer.SaveAndReimport();
-        }
+        //TextureImporter importer = (TextureImporter)TextureImporter.GetAtPath(resourcePath);
+        //if (tex2d != null && tex2d.dimension != UnityEngine.Rendering.TextureDimension.Cube)
+        //{
+        //    importer.textureShape = TextureImporterShape.TextureCube;
+        //    importer.SaveAndReimport();
+        //}
 
         yield return new WaitForSecondsRealtime(1); //INCREASE OR DECREASE THIS TIMING; Depends on the ability of the computer to rapidly execute the previous tasks
 

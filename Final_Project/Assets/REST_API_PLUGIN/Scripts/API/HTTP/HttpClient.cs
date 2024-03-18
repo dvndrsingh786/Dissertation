@@ -183,7 +183,16 @@ namespace REST_API_HANDLER
 			Debug.Log("UNITY>> Res tExt " + resText);
 			long resCode = www.responseCode;
 			string url = www.url;
+			//Debug.Log(resCode);
+			//Debug.Log(www.url);
+			//Debug.Log(www.uri);
 			Dictionary<string, string> headers = www.GetResponseHeaders();
+   //         foreach (var item in headers)
+   //         {
+			//	Debug.Log(item.Key);
+			//	Debug.Log(item.Value);
+			//	MidjourneyApi.Heya(item.Value);
+			//}
 			//Debug.Log("Res Code " + resCode);
 			if (200 <= resCode && resCode <= 299) // 200 is success
 			{
