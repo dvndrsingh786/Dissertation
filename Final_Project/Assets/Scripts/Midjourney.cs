@@ -3,21 +3,32 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System;
 using System.Collections.Generic;
+using TMPro;
 
+public enum Stage
+{
+    Generating,
+    CheckingStatus,
+    Upscaling,
+    FetchingFinalImage,
+    LoadingImage,
+    ERROR
+}
 
 public class Midjourney : MonoBehaviour
 {
     [SerializeField] string ApiKey = "";
+    [SerializeField] Stage currentStage;
+    [SerializeField] TMP_InputField inputText;
 
-    private void Start()
+    public void GenerateImageStart()
     {
-        //StartCoroutine(GenerateImageFromPrompt("Cat Taking Bath"));
-        StartCoroutine(FetchTaskStatus("c29e520d-2da6-40b2-a546-802ad3b85e20"));
-        //StartCoroutine(Upscale("f213efbd-68a5-46c8-88ed-a2df9bd2b307"));
+        StartCoroutine(GenerateImageFromPrompt(inputText.text));
     }
 
     IEnumerator GenerateImageFromPrompt(string prompt)
     {
+        currentStage = Stage.Generating;
         string url = "https://api.midjourneyapi.xyz/mj/v2/imagine";
         string apiKey = ApiKey;
 
@@ -48,17 +59,12 @@ public class Midjourney : MonoBehaviour
             else
             {
                 Debug.Log(request.downloadHandler.text);
-                ApiResponse response = JsonUtility.FromJson<ApiResponse>(request.downloadHandler.text);
+                ApiResponseImagine response = JsonUtility.FromJson<ApiResponseImagine>(request.downloadHandler.text);
                 Debug.Log("Task ID: " + response.task_id);
-                Temp(response.task_id);
-                // Process the response here
+                currentStage = Stage.CheckingStatus;
+                StartCoroutine(FetchTaskStatus(response.task_id));
             }
         }
-    }
-
-    void Temp(string _id)
-    {
-        StartCoroutine(FetchTaskStatus(_id));
     }
 
     IEnumerator FetchTaskStatus(string taskId)
@@ -84,18 +90,30 @@ public class Midjourney : MonoBehaviour
             else
             {
                 Debug.Log(request.downloadHandler.text);
-                ApiResponse1 response = JsonUtility.FromJson<ApiResponse1>(request.downloadHandler.text);
+                ApiResponseFetch response = JsonUtility.FromJson<ApiResponseFetch>(request.downloadHandler.text);
                 Debug.Log("Status: " + response.status);
-                if (response.task_result != null && response.task_result.image_urls != null && response.task_result.image_urls.Count > 0)
+                if (response.status == "finished" && currentStage == Stage.CheckingStatus)
                 {
-                    Debug.Log("First Image URL: " + response.task_result.image_urls[0]);
-                    LoadAndApplyTexture(response.task_result.image_urls[0]);
+                    currentStage = Stage.Upscaling;
+                    StartCoroutine(Upscale(taskId));
+                }
+                else if (currentStage == Stage.FetchingFinalImage)
+                {
+                    if (response.status == "finished")
+                    {
+                        currentStage = Stage.LoadingImage;
+                        LoadAndApplyTexture(response.task_result.image_url);
+                    }
+                    else
+                    {
+                        yield return new WaitForSeconds(5);
+                        StartCoroutine(FetchTaskStatus(taskId));
+                    }
                 }
                 else
                 {
-                    Debug.Log(response.task_result);
-                    Debug.Log(response.task_result.image_urls);
-                    Debug.Log(response.task_result.image_urls.Count);
+                    yield return new WaitForSeconds(5);
+                    StartCoroutine(FetchTaskStatus(taskId));
                 }
             }
         }
@@ -127,19 +145,10 @@ public class Midjourney : MonoBehaviour
             else
             {
                 Debug.Log(request.downloadHandler.text);
-                ApiResponse1 response = JsonUtility.FromJson<ApiResponse1>(request.downloadHandler.text);
+                ApiResponseUpscale response = JsonUtility.FromJson<ApiResponseUpscale>(request.downloadHandler.text);
                 Debug.Log("Status: " + response.status);
-                if (response.task_result != null && response.task_result.image_urls != null && response.task_result.image_urls.Count > 0)
-                {
-                    Debug.Log("First Image URL: " + response.task_result.image_urls[0]);
-                    LoadAndApplyTexture(response.task_result.image_urls[0]);
-                }
-                else
-                {
-                    Debug.Log(response.task_result);
-                    Debug.Log(response.task_result.image_urls);
-                    Debug.Log(response.task_result.image_urls.Count);
-                }
+                currentStage = Stage.FetchingFinalImage;
+                StartCoroutine(FetchTaskStatus(response.task_id));
             }
         }
     }
@@ -190,7 +199,7 @@ public class UpscaleJson
 }
 
 [System.Serializable]
-public class ApiResponse
+public class ApiResponseImagine
 {
     public string task_id;
     public string status;
@@ -198,7 +207,15 @@ public class ApiResponse
 }
 
 [System.Serializable]
-public class ApiResponse1
+public class ApiResponseUpscale
+{
+    public string task_id;
+    public string status;
+    public TaskResult task_result;
+}
+
+[System.Serializable]
+public class ApiResponseFetch
 {
     public string status;
     public TaskResult task_result;

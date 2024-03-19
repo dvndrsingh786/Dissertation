@@ -828,14 +828,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1151754481e124fdcb4e1e9f16d642ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadingpanel: {fileID: 78806865}
-  inputText: {fileID: 2137622364}
-  resultText: {fileID: 902343630}
-  previewObjs:
-  - {fileID: 332822312}
-  - {fileID: 1056789422}
-  - {fileID: 671324291}
-  - {fileID: 377988658}
 --- !u!4 &498774180
 Transform:
   m_ObjectHideFlags: 0
@@ -1162,6 +1154,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 741697291}
   m_CullTransparentMesh: 0
+--- !u!1 &742576628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 742576629}
+  - component: {fileID: 742576630}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &742576629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742576628}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &742576630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742576628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ff01f9a10ab46a5a82ee60214e0ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingpanel: {fileID: 78806865}
+  inputText: {fileID: 2137622364}
+  resultText: {fileID: 902343630}
+  previewObjs:
+  - {fileID: 332822312}
+  - {fileID: 1056789422}
+  - {fileID: 671324291}
+  - {fileID: 377988658}
 --- !u!1 &844524909
 GameObject:
   m_ObjectHideFlags: 0
@@ -2532,4 +2576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af431309bf0fa4318b4527869c5a61b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ApiKey: 9594f542e42941cda61c83dfb70773a9d3572c16a78b7ba48bfb5318b6dd6b1f
+  currentStage: 0
+  inputText: {fileID: 0}
   previewObj: {fileID: 332822312}

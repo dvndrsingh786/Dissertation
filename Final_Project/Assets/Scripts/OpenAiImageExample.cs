@@ -10,30 +10,26 @@ using System.IO;
 
 public class OpenAiImageExample : MonoBehaviour
 {
-	public GameObject loadingpanel;
-	public TMP_InputField inputText;
-	public TMP_Text resultText;
-	public List<GameObject> previewObjs;
 
 	private string IMAGE_GENERTION_API_URL = "https://api.openai.com/v1/images/generations";
 
 	public void SearchButtonClicked()
     {
-		resultText.text = "";
-		resultText.enabled = false;
-		loadingpanel.SetActive(true);
+		GameManager.instance.resultText.text = "";
+		GameManager.instance.resultText.enabled = false;
+		GameManager.instance.loadingpanel.SetActive(true);
 
-		for (int i = 0; i < previewObjs.Count; i++)
+		for (int i = 0; i < GameManager.instance.previewObjs.Count; i++)
 		{
-			previewObjs[i].GetComponent<Renderer>().material.mainTexture = null;
+			GameManager.instance.previewObjs[i].GetComponent<Renderer>().material.mainTexture = null;
 		}
 
-		string description = inputText.text;
+		string description = GameManager.instance.inputText.text;
 		string resolution = "1024x1024"; // Possible Resolution 256x256, 512x512, or 1024x1024.
 		//string resolution = "256x256"; // Possible Resolution 256x256, 512x512, or 1024x1024.
 
 		GenerateImage(description, resolution, () => {
-			loadingpanel.SetActive(false);
+			GameManager.instance.loadingpanel.SetActive(false);
 		});
 		
 	}
@@ -45,13 +41,13 @@ public class OpenAiImageExample : MonoBehaviour
 		ApiCall.instance.PostRequest<GenerateImageResponseModel>(IMAGE_GENERTION_API_URL, reqModel.ToCustomHeader(), null, reqModel.ToBody(), (result =>
 		{
 			loadTexture(result.data, completationAction);
-			resultText.enabled = true;
+			GameManager.instance.resultText.enabled = true;
 		}), (error =>
 		{
 			ErrorResponseModel entity = JsonUtility.FromJson<ErrorResponseModel>(error);
 			completationAction.Invoke();
-			resultText.enabled = true;
-			resultText.text = entity.error.message;
+			GameManager.instance.resultText.enabled = true;
+			GameManager.instance.resultText.text = entity.error.message;
 		}));
 
 	}
@@ -64,7 +60,7 @@ public class OpenAiImageExample : MonoBehaviour
 		for (int i = 0; i < urls.Count; i++)
         {
 			Texture2D _texture = await GetRemoteTexture(urls[i].url);
-			previewObjs[i].GetComponent<Renderer>().material.mainTexture = _texture;
+			GameManager.instance.previewObjs[i].GetComponent<Renderer>().material.mainTexture = _texture;
 			Utility.WriteImageOnDisk(_texture, System.DateTime.Now.Millisecond + "_createImg_" + i + "_.jpg");
 		}
 
