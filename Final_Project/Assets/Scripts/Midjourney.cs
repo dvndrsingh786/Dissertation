@@ -19,11 +19,12 @@ public class Midjourney : MonoBehaviour
 {
     [SerializeField] string ApiKey = "";
     [SerializeField] Stage currentStage;
-    [SerializeField] TMP_InputField inputText;
+    [SerializeField] GameObject loadingPanel;
 
     public void GenerateImageStart()
     {
-        StartCoroutine(GenerateImageFromPrompt(inputText.text));
+        loadingPanel.SetActive(true);
+        StartCoroutine(GenerateImageFromPrompt(GameManager.instance.inputText.text));
     }
 
     IEnumerator GenerateImageFromPrompt(string prompt)
@@ -169,10 +170,12 @@ public class Midjourney : MonoBehaviour
                 {
                     Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
                     previewObj.GetComponent<Renderer>().material.mainTexture = texture;
+                    loadingPanel.SetActive(false);
                 }
                 else
                 {
                     Debug.LogError($"Failed to load texture from {_url}: {uwr.error}");
+                    loadingPanel.SetActive(false);
                 }
             }
     }
