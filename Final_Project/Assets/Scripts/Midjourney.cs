@@ -35,15 +35,10 @@ public class Midjourney : MonoBehaviour
 
         ImagineJson abc = new ImagineJson();
         abc.prompt = prompt;
+        abc.process_mode = "turbo";
 
         string jsonn = JsonUtility.ToJson(abc);
         Debug.Log(jsonn);
-        //WWWForm form = new WWWForm();
-        //form.AddField("prompt", prompt);
-        //form.AddField("aspect_ratio", "4:3");
-        //form.AddField("process_mode", "relax");
-        //form.AddField("webhook_endpoint", "");
-        //form.AddField("webhook_secret", "");
 
         using (UnityWebRequest request = UnityWebRequest.Post(url, "POST"))
         {
@@ -186,6 +181,7 @@ public class Midjourney : MonoBehaviour
 public class ImagineJson
 {
     public string prompt;
+    public string process_mode;
 }
 
 [System.Serializable]
