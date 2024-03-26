@@ -8,7 +8,12 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
     public TMP_InputField inputText;
+
+    [Header("Room Moving")]
     public int currentRoom = 1;
+    public GameObject rightBtn;
+    public GameObject leftBtn;
+    public TextMeshProUGUI roomNumberTxt;
 
     [Header("Midjourney")]
     [SerializeField] GameObject quadMR1;
@@ -26,6 +31,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        rightBtn.SetActive(false);
     }
 
     #region Loading Panel Handler
@@ -45,6 +51,8 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+
+    #region Image Processing
 
     public void GenerateBtnClicked()
     {
@@ -82,6 +90,17 @@ public class GameManager : MonoBehaviour
         {
             quadDR3.GetComponent<Renderer>().material.mainTexture = tex;
         }
+    }
+
+    #endregion
+
+    public void SetRoomObjs()
+    {
+        if (currentRoom == 3) leftBtn.SetActive(false);
+        else leftBtn.SetActive(true);
+        if (currentRoom == 1) rightBtn.SetActive(false);
+        else rightBtn.SetActive(true);
+        roomNumberTxt.text = "Room " + currentRoom.ToString();
     }
 
 }

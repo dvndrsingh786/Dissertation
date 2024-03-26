@@ -10,6 +10,9 @@ public enum CameraState
 
 public class CameraController : MonoBehaviour
 {
+
+    public static CameraController instance;
+
     [Header("Controls")]
     [SerializeField] float movementSpeed;
 
@@ -20,17 +23,35 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] Vector3 targetPosition;
     [SerializeField] CameraState currentState;
-    [SerializeField] int abc = 1;
 
-    [ContextMenu("Room")]
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public void MoveLeft()
+    {
+        if (currentState == CameraState.MovingToPosition) return;
+        if (GameManager.instance.currentRoom == 3) return;
+        GameManager.instance.currentRoom++;
+        MoveToRoom();
+    }
+
+    public void MoveRight()
+    {
+        if (currentState == CameraState.MovingToPosition) return;
+        if (GameManager.instance.currentRoom == 1) return;
+        GameManager.instance.currentRoom--;
+        MoveToRoom();
+    }
+
     void MoveToRoom()
     {
-        int roomNumber = abc;
-        if (roomNumber == 1)
+        if (GameManager.instance.currentRoom == 1)
         {
             targetPosition = room1Pos.position;
         }
-        else if (roomNumber == 2)
+        else if (GameManager.instance.currentRoom == 2)
         {
             targetPosition = room2Pos.position;
         }
@@ -49,6 +70,7 @@ public class CameraController : MonoBehaviour
             if (Vector3.Distance(transform.localPosition, targetPosition) < 0.01f)
             {
                 currentState = CameraState.AtPosition;
+                GameManager.instance.SetRoomObjs();
             }
         }
     }
