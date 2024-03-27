@@ -6,14 +6,17 @@ using UnityEngine.Networking;
 using TMPro;
 using System;
 using System.IO;
+using System.Net.Http;
 
 public class DALLE : MonoBehaviour
 {
 
 	private string IMAGE_GENERTION_API_URL = "https://api.openai.com/v1/images/generations";
-	[SerializeField] string ApiKey = "";
+	private string IMAGE_EDIT_API_URL = "https://api.openai.com/v1/images/edits";
+    [SerializeField] string ApiKey = "";
 	[SerializeField] string ORGANIZATION_KEY = "org-wr7avNWc2Yg2hctjjcNVstKb";
-
+	[SerializeField] Texture2D image;
+	[SerializeField] Texture2D mask;
 	public static DALLE instance;
 
     private void Awake()
@@ -25,12 +28,22 @@ public class DALLE : MonoBehaviour
 	{
 		GameManager.instance.ShowLoadingPanel();
 
-		string description = GameManager.instance.inputText.text;
+		string description = GameManager.instance.promptInputField.text;
 		string resolution = "1024x1024"; // Possible Resolution 256x256, 512x512, or 1024x1024.
 										 //string resolution = "256x256"; // Possible Resolution 256x256, 512x512, or 1024x1024.
 		resolution = "256x256"; //if DALL E 2
-		StartCoroutine(GenerateImage(description, resolution));
+		if (GameManager.instance.currentRoom == 1)
+		{
+			StartCoroutine(GenerateImage(description, resolution));
+		}
+		else if(GameManager.instance.currentRoom == 2)
+		{
+			StartCoroutine(EditImage(GameManager.instance.imageUrlField.text, description, resolution));
+		}
+		else
+		{
 
+		}
 	}
 
 	IEnumerator GenerateImage(string description, string resolution)
@@ -45,7 +58,7 @@ public class DALLE : MonoBehaviour
 		string jsonn = JsonUtility.ToJson(reqModel);
 		Debug.Log(jsonn);
 
-		using (UnityWebRequest request = UnityWebRequest.Post(IMAGE_GENERTION_API_URL, "POST"))
+		using (UnityWebRequest request = UnityWebRequest.PostWwwForm(IMAGE_GENERTION_API_URL, "POST"))
 		{
 			byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonn);
 			request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -58,6 +71,7 @@ public class DALLE : MonoBehaviour
 			if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
 			{
 				Debug.LogError(request.error);
+				GameManager.instance.HideLoadingPanel();
 			}
 			else
 			{
@@ -73,12 +87,59 @@ public class DALLE : MonoBehaviour
 					break;
 				}
 			}
-            GameManager.instance.HideLoadingPanel();
         }
-
 	}
 
-	public void LoadAndApplyTexture(string url)
+
+    IEnumerator EditImage(string imageUrl, string description, string resolution)
+    {
+        WWWForm formData = new WWWForm();
+        formData.AddField("prompt", description);
+
+        byte[] imageData = File.ReadAllBytes(Application.dataPath + "/maskk.png");
+        //byte[] maskData = File.ReadAllBytes(Application.dataPath + "/mask.png");
+
+        formData.AddBinaryData("image", imageData, "image.png", "image/png");
+        //formData.AddBinaryData("mask", maskData, "mask.png", "image/png");
+
+        UnityWebRequest request = UnityWebRequest.Post(IMAGE_EDIT_API_URL, formData);
+        request.SetRequestHeader("Authorization", "Bearer " + ApiKey);
+        request.SetRequestHeader("OpenAI-Organization", ORGANIZATION_KEY);
+        Debug.Log("Request sent");
+        yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Error: " + request.error);
+            Debug.Log("Response code: " + request.responseCode);
+            Debug.Log("Response body: " + request.downloadHandler.text);
+			GameManager.instance.HideLoadingPanel();
+		}
+		else
+        {
+            // Request successful, handle response here
+            Debug.Log("Form request successful");
+            Debug.Log("Response body: " + request.downloadHandler.text);
+            Debug.Log(request.downloadHandler.text);
+            MyJsonData myData = JsonUtility.FromJson<MyJsonData>(request.downloadHandler.text);
+
+            // Example usage of the deserialized object
+            Debug.Log($"Created: {myData.created}");
+            foreach (var item in myData.data)
+            {
+                Debug.Log($"URL: {item.url}");
+                LoadAndApplyTexture(item.url);
+                break;
+            }
+        }
+    }
+
+	string GetStringFromTexture2D(Texture2D target)
+	{
+		byte[] bArray = target.GetRawTextureData();
+		return Convert.ToBase64String(bArray);
+	}
+
+    public void LoadAndApplyTexture(string url)
 	{
 		StartCoroutine(LoadTexture(url));
 	}
@@ -121,6 +182,16 @@ public class GenerateImageRequestModel
 	public string prompt;
 	public int n;
 	public string size;
+}
+
+public class EditImageRequestModel
+{
+	public byte[] image;
+	public byte[] mask;
+    public string model;
+    public string prompt;
+    public int n;
+    public string size;
 }
 
 [Serializable]

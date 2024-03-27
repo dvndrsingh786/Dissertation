@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
 {
 
     public static GameManager instance;
-    public TMP_InputField inputText;
+    public TMP_InputField promptInputField;
+    public TMP_InputField imageUrlField;
 
     [Header("Room Moving")]
     public int currentRoom = 1;
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     public void GenerateBtnClicked()
     {
-        //Midjourney.instance.GenerateImageStart();
+        Midjourney.instance.GenerateImageStart();
         DALLE.instance.GenerateImageStart();
     }
 
@@ -96,10 +97,28 @@ public class GameManager : MonoBehaviour
 
     public void SetRoomObjs()
     {
-        if (currentRoom == 3) leftBtn.SetActive(false);
-        else leftBtn.SetActive(true);
-        if (currentRoom == 1) rightBtn.SetActive(false);
+        if (currentRoom == 1)
+        {
+            rightBtn.SetActive(false);
+        }
         else rightBtn.SetActive(true);
+        if(currentRoom == 2)
+        {
+            imageUrlField.gameObject.SetActive(true);
+            imageUrlField.text = "https://davdissertation.s3.eu-west-2.amazonaws.com/JoideepSir.PNG";
+        }
+        else
+        {
+            imageUrlField.gameObject.SetActive(false);
+        }
+        if (currentRoom == 3)
+        {
+            leftBtn.SetActive(false);
+        }
+        else leftBtn.SetActive(true);
+
+
+        
         roomNumberTxt.text = "Room " + currentRoom.ToString();
     }
 

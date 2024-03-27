@@ -29,7 +29,18 @@ public class Midjourney : MonoBehaviour
     public void GenerateImageStart()
     {
         GameManager.instance.ShowLoadingPanel();
-        StartCoroutine(GenerateImageFromPrompt(GameManager.instance.inputText.text));
+        if (GameManager.instance.currentRoom == 1)
+        {
+            StartCoroutine(GenerateImageFromPrompt(GameManager.instance.promptInputField.text));
+        }
+        else if (GameManager.instance.currentRoom == 2)
+        {
+            StartCoroutine(EditAnImage(GameManager.instance.imageUrlField.text, GameManager.instance.promptInputField.text));
+        }
+        else
+        {
+
+        }
     }
 
     IEnumerator GenerateImageFromPrompt(string prompt)
@@ -45,7 +56,45 @@ public class Midjourney : MonoBehaviour
         string jsonn = JsonUtility.ToJson(abc);
         Debug.Log(jsonn);
 
-        using (UnityWebRequest request = UnityWebRequest.Post(url, "POST"))
+        using (UnityWebRequest request = UnityWebRequest.PostWwwForm(url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonn);
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.SetRequestHeader("X-API-KEY", apiKey);
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError(request.error);
+            }
+            else
+            {
+                Debug.Log(request.downloadHandler.text);
+                ApiResponseImagine response = JsonUtility.FromJson<ApiResponseImagine>(request.downloadHandler.text);
+                Debug.Log("Task ID: " + response.task_id);
+                currentStage = Stage.CheckingStatus;
+                StartCoroutine(FetchTaskStatus(response.task_id));
+            }
+        }
+    }
+
+    IEnumerator EditAnImage(string imageUrl, string prompt)
+    {
+        imageUrl = "https://davdissertation.s3.eu-west-2.amazonaws.com/maskk.png";
+        currentStage = Stage.Generating;
+        string url = "https://api.midjourneyapi.xyz/mj/v2/imagine";
+        string apiKey = ApiKey;
+
+        ImagineJson abc = new ImagineJson();
+        //abc.prompt = prompt + " Image Url: " + imageUrl;
+        abc.prompt = imageUrl + " " + prompt;
+        abc.process_mode = "relax";
+
+        string jsonn = JsonUtility.ToJson(abc);
+        Debug.Log(jsonn);
+
+        using (UnityWebRequest request = UnityWebRequest.PostWwwForm(url, "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonn);
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -77,7 +126,7 @@ public class Midjourney : MonoBehaviour
         string jsonn = JsonUtility.ToJson(abc);
         Debug.Log(jsonn);
 
-        using (UnityWebRequest request = UnityWebRequest.Post(url, "POST"))
+        using (UnityWebRequest request = UnityWebRequest.PostWwwForm(url, "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonn);
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -131,7 +180,7 @@ public class Midjourney : MonoBehaviour
         string jsonn = JsonUtility.ToJson(abc);
         Debug.Log(jsonn);
 
-        using (UnityWebRequest request = UnityWebRequest.Post(url, "POST"))
+        using (UnityWebRequest request = UnityWebRequest.PostWwwForm(url, "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonn);
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
