@@ -81,7 +81,7 @@ public class Midjourney : MonoBehaviour
 
     IEnumerator EditAnImage(string imageUrl, string prompt)
     {
-        imageUrl = "https://davdissertation.s3.eu-west-2.amazonaws.com/maskk.png";
+        imageUrl = "https://davdissertation.s3.eu-west-2.amazonaws.com/1.png";
         currentStage = Stage.Generating;
         string url = "https://api.midjourneyapi.xyz/mj/v2/imagine";
         string apiKey = ApiKey;

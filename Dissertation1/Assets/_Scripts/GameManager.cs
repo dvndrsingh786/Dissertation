@@ -6,6 +6,9 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
 
+    public bool isDalle;
+    public bool isMidjourney;
+
     public static GameManager instance;
     public TMP_InputField promptInputField;
     public TMP_InputField imageUrlField;
@@ -57,7 +60,9 @@ public class GameManager : MonoBehaviour
 
     public void GenerateBtnClicked()
     {
+        if(isMidjourney)
         Midjourney.instance.GenerateImageStart();
+        if(isDalle)
         DALLE.instance.GenerateImageStart();
     }
 
