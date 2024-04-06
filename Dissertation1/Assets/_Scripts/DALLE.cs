@@ -22,7 +22,7 @@ public class DALLE : MonoBehaviour
     private void Awake()
     {
 		instance = this;
-    }
+	}
 
     public void GenerateImageStart()
 	{
@@ -31,7 +31,7 @@ public class DALLE : MonoBehaviour
 		string description = GameManager.instance.promptInputField.text;
 		string resolution = "1024x1024"; // Possible Resolution 256x256, 512x512, or 1024x1024.
 										 //string resolution = "256x256"; // Possible Resolution 256x256, 512x512, or 1024x1024.
-		resolution = "256x256"; //if DALL E 2
+		//resolution = "256x256"; //if DALL E 2
 		if (GameManager.instance.currentRoom == 1)
 		{
 			StartCoroutine(GenerateImage(description, resolution));
@@ -50,7 +50,7 @@ public class DALLE : MonoBehaviour
 	{
 
 		GenerateImageRequestModel reqModel = new GenerateImageRequestModel();
-		reqModel.model = "dall-e-2";
+		reqModel.model = "dall-e-3";
 		reqModel.prompt = description;
 		reqModel.n = 1;
 		reqModel.size = resolution;
@@ -71,6 +71,8 @@ public class DALLE : MonoBehaviour
 			if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
 			{
 				Debug.LogError(request.error);
+				Debug.Log("Response code: " + request.responseCode);
+				Debug.Log("Response body: " + request.downloadHandler.text);
 				GameManager.instance.HideLoadingPanel();
 			}
 			else
@@ -96,10 +98,14 @@ public class DALLE : MonoBehaviour
         WWWForm formData = new WWWForm();
         formData.AddField("prompt", description);
 
-        byte[] imageData = File.ReadAllBytes(Application.dataPath + "/maskk.png");
-        //byte[] maskData = File.ReadAllBytes(Application.dataPath + "/mask.png");
+		//byte[] imageData = image.GetRawTextureData();
+		//byte[] imageData = File.ReadAllBytes(Application.dataPath + "/maskk.png");
+		byte[] imageData = File.ReadAllBytes(Application.dataPath + "/img.png");
+		//byte[] maskData = File.ReadAllBytes(Application.dataPath + "/mask.png");
 
-        formData.AddBinaryData("image", imageData, "image.png", "image/png");
+
+
+		formData.AddBinaryData("image", imageData, "image.png", "image/png");
         //formData.AddBinaryData("mask", maskData, "mask.png", "image/png");
 
         UnityWebRequest request = UnityWebRequest.Post(IMAGE_EDIT_API_URL, formData);

@@ -1067,7 +1067,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35.9
+  m_fontSize: 29.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1269,7 +1269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ApiKey: 
   ORGANIZATION_KEY: org-wr7avNWc2Yg2hctjjcNVstKb
-  image: {fileID: 2800000, guid: 06d15a9ab6d675b4b85e0d07d7ceed1c, type: 3}
+  image: {fileID: 2800000, guid: 90e8aa94523a54023bd965b29340142e, type: 3}
   mask: {fileID: 2800000, guid: b69d6aac477a98a4fb80e17bfdf42600, type: 3}
 --- !u!1001 &339492775
 PrefabInstance:
@@ -2262,6 +2262,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777688034}
   m_CullTransparentMesh: 1
+--- !u!1 &783935487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 783935488}
+  m_Layer: 0
+  m_Name: -------SCRIPTS-------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &783935488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783935487}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.879441, y: 2.8390887, z: 4.117281}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &848327273
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,6 +2361,51 @@ Transform:
   - {fileID: 225911080}
   - {fileID: 646321570}
   m_Father: {fileID: 1584329120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &906565873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 906565875}
+  - component: {fileID: 906565874}
+  m_Layer: 0
+  m_Name: Google Translate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &906565874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906565873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c92c382e1a7924e4ebb98adff589898c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiKey: 
+--- !u!4 &906565875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906565873}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &929457416
 GameObject:
@@ -3653,7 +3729,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
+  m_fontSize: 9.5
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3835,6 +3911,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268013876}
   m_CullTransparentMesh: 1
+--- !u!1 &1292357743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1292357745}
+  - component: {fileID: 1292357744}
+  m_Layer: 0
+  m_Name: Google Vision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1292357744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292357743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb0f77194451462f988881ddd32910e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  url: https://vision.googleapis.com/v1/images:annotate?key=
+  apiKey: 
+  featureType: 5
+  maxResults: 10
+  resPanel: {fileID: 0}
+  responseText: {fileID: 0}
+  responseArray: {fileID: 0}
+  texture2D: {fileID: 2800000, guid: 4fd062bbd7b0e4382876475503ee30d0, type: 3}
+--- !u!4 &1292357745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292357743}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1295683632
 GameObject:
   m_ObjectHideFlags: 0
@@ -5077,8 +5205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9850db0fec3c84c49aec0e06af20110e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDalle: 0
+  isDalle: 1
   isMidjourney: 1
+  abc: "\u6728\u5934"
   promptInputField: {fileID: 961924714}
   imageUrlField: {fileID: 1027539452}
   currentRoom: 1
@@ -6080,12 +6209,15 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 705507995}
-  - {fileID: 1670474008}
-  - {fileID: 1675529309}
-  - {fileID: 328497618}
   - {fileID: 1584329120}
   - {fileID: 652257632}
   - {fileID: 1083659932}
   - {fileID: 527608794}
   - {fileID: 625452313}
   - {fileID: 634392926}
+  - {fileID: 783935488}
+  - {fileID: 1670474008}
+  - {fileID: 1675529309}
+  - {fileID: 328497618}
+  - {fileID: 1292357745}
+  - {fileID: 906565875}

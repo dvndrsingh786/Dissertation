@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     public bool isDalle;
     public bool isMidjourney;
+    public string abc = "木头";
 
     public static GameManager instance;
     public TMP_InputField promptInputField;
@@ -97,6 +98,8 @@ public class GameManager : MonoBehaviour
             quadDR3.GetComponent<Renderer>().material.mainTexture = tex;
         }
     }
+
+    
 
     #endregion
 

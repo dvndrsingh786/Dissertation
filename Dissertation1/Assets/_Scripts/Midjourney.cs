@@ -105,6 +105,48 @@ public class Midjourney : MonoBehaviour
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.LogError(request.error);
+                Debug.Log("Response code: " + request.responseCode);
+                Debug.Log("Response body: " + request.downloadHandler.text);
+            }
+            else
+            {
+                Debug.Log(request.downloadHandler.text);
+                ApiResponseImagine response = JsonUtility.FromJson<ApiResponseImagine>(request.downloadHandler.text);
+                Debug.Log("Task ID: " + response.task_id);
+                currentStage = Stage.CheckingStatus;
+                StartCoroutine(FetchTaskStatus(response.task_id));
+            }
+        }
+    }
+
+    IEnumerator Describe()
+    {
+        string imageUrl = "https://davdissertation.s3.eu-west-2.amazonaws.com/s-l1200-ezgif.com-webp-to-png-converter.png";
+        currentStage = Stage.Generating;
+        string url = "https://api.midjourneyapi.xyz/mj/v2/describe";
+        string apiKey = ApiKey;
+
+        DescribeJson abc = new DescribeJson();
+        //abc.prompt = prompt + " Image Url: " + imageUrl;
+        abc.image_url = imageUrl;
+        abc.process_mode = "relax";
+
+        string jsonn = JsonUtility.ToJson(abc);
+        Debug.Log(jsonn);
+
+        using (UnityWebRequest request = UnityWebRequest.PostWwwForm(url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonn);
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.SetRequestHeader("X-API-KEY", apiKey);
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError(request.error);
+                Debug.Log("Response code: " + request.responseCode);
+                Debug.Log("Response body: " + request.downloadHandler.text);
             }
             else
             {
@@ -235,6 +277,13 @@ public class Midjourney : MonoBehaviour
 public class ImagineJson
 {
     public string prompt;
+    public string process_mode;
+}
+
+[System.Serializable]
+public class DescribeJson
+{
+    public string image_url;
     public string process_mode;
 }
 
