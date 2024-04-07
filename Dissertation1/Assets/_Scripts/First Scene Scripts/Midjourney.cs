@@ -26,24 +26,7 @@ public class Midjourney : MonoBehaviour
         instance = this;
     }
 
-    public void GenerateImageStart()
-    {
-        GameManager.instance.ShowLoadingPanel();
-        if (GameManager.instance.currentRoom == 1)
-        {
-            StartCoroutine(GenerateImageFromPrompt(GameManager.instance.promptInputField.text));
-        }
-        else if (GameManager.instance.currentRoom == 2)
-        {
-            StartCoroutine(EditAnImage(GameManager.instance.imageUrlField.text, GameManager.instance.promptInputField.text));
-        }
-        else
-        {
-
-        }
-    }
-
-    IEnumerator GenerateImageFromPrompt(string prompt)
+    public IEnumerator GenerateImageFromPrompt(string prompt, Action<CoroutineReturner> action)
     {
         currentStage = Stage.Generating;
         string url = "https://api.midjourneyapi.xyz/mj/v2/imagine";
@@ -52,6 +35,7 @@ public class Midjourney : MonoBehaviour
         ImagineJson abc = new ImagineJson();
         abc.prompt = prompt;
         abc.process_mode = "relax";
+        abc.aspect_ratio = "7:4";
 
         string jsonn = JsonUtility.ToJson(abc);
         Debug.Log(jsonn);
@@ -67,6 +51,10 @@ public class Midjourney : MonoBehaviour
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.LogError(request.error);
+                CoroutineReturner temp = new CoroutineReturner();
+                temp.isSuccess = false;
+                temp.errorMessage = request.error;
+                action(temp);
             }
             else
             {
@@ -74,12 +62,15 @@ public class Midjourney : MonoBehaviour
                 ApiResponseImagine response = JsonUtility.FromJson<ApiResponseImagine>(request.downloadHandler.text);
                 Debug.Log("Task ID: " + response.task_id);
                 currentStage = Stage.CheckingStatus;
-                StartCoroutine(FetchTaskStatus(response.task_id));
+                StartCoroutine(FetchTaskStatus(response.task_id, (obj) =>
+                {
+                    action(obj);
+                }));
             }
         }
     }
 
-    IEnumerator EditAnImage(string imageUrl, string prompt)
+    IEnumerator EditAnImage(string imageUrl, string prompt, Action<CoroutineReturner> action)
     {
         imageUrl = "https://davdissertation.s3.eu-west-2.amazonaws.com/1.png";
         currentStage = Stage.Generating;
@@ -107,6 +98,10 @@ public class Midjourney : MonoBehaviour
                 Debug.LogError(request.error);
                 Debug.Log("Response code: " + request.responseCode);
                 Debug.Log("Response body: " + request.downloadHandler.text);
+                CoroutineReturner temp = new CoroutineReturner();
+                temp.isSuccess = false;
+                temp.errorMessage = request.error;
+                action(temp);
             }
             else
             {
@@ -114,12 +109,15 @@ public class Midjourney : MonoBehaviour
                 ApiResponseImagine response = JsonUtility.FromJson<ApiResponseImagine>(request.downloadHandler.text);
                 Debug.Log("Task ID: " + response.task_id);
                 currentStage = Stage.CheckingStatus;
-                StartCoroutine(FetchTaskStatus(response.task_id));
+                StartCoroutine(FetchTaskStatus(response.task_id,(obj) =>
+                {
+                    action(obj);
+                }));
             }
         }
     }
 
-    IEnumerator Describe()
+    IEnumerator Describe(Action<CoroutineReturner> action)
     {
         string imageUrl = "https://davdissertation.s3.eu-west-2.amazonaws.com/s-l1200-ezgif.com-webp-to-png-converter.png";
         currentStage = Stage.Generating;
@@ -147,6 +145,10 @@ public class Midjourney : MonoBehaviour
                 Debug.LogError(request.error);
                 Debug.Log("Response code: " + request.responseCode);
                 Debug.Log("Response body: " + request.downloadHandler.text);
+                CoroutineReturner temp = new CoroutineReturner();
+                temp.isSuccess = false;
+                temp.errorMessage = request.error;
+                action(temp);
             }
             else
             {
@@ -154,12 +156,15 @@ public class Midjourney : MonoBehaviour
                 ApiResponseImagine response = JsonUtility.FromJson<ApiResponseImagine>(request.downloadHandler.text);
                 Debug.Log("Task ID: " + response.task_id);
                 currentStage = Stage.CheckingStatus;
-                StartCoroutine(FetchTaskStatus(response.task_id));
+                StartCoroutine(FetchTaskStatus(response.task_id,(obj) =>
+                {
+                    action(obj);
+                }));
             }
         }
     }
 
-    IEnumerator FetchTaskStatus(string taskId)
+    IEnumerator FetchTaskStatus(string taskId, Action<CoroutineReturner> actionFTS)
     {
         string url = "https://api.midjourneyapi.xyz/mj/v2/fetch";
 
@@ -178,6 +183,10 @@ public class Midjourney : MonoBehaviour
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.LogError(request.error);
+                CoroutineReturner temp = new CoroutineReturner();
+                temp.isSuccess = false;
+                temp.errorMessage = request.error;
+                actionFTS(temp);
             }
             else
             {
@@ -187,31 +196,43 @@ public class Midjourney : MonoBehaviour
                 if (response.status == "finished" && currentStage == Stage.CheckingStatus)
                 {
                     currentStage = Stage.Upscaling;
-                    StartCoroutine(Upscale(taskId));
+                    StartCoroutine(Upscale(taskId, (obj) =>
+                    {
+                        actionFTS(obj);
+                    }));
                 }
                 else if (currentStage == Stage.FetchingFinalImage)
                 {
                     if (response.status == "finished")
                     {
                         currentStage = Stage.LoadingImage;
-                        LoadAndApplyTexture(response.task_result.image_url);
+                        StartCoroutine(LoadTexture(response.task_result.image_url,(obj) =>
+                        {
+                            actionFTS(obj);
+                        }));
                     }
                     else
                     {
                         yield return new WaitForSeconds(5);
-                        StartCoroutine(FetchTaskStatus(taskId));
+                        StartCoroutine(FetchTaskStatus(taskId, (obj) =>
+                        {
+                            actionFTS(obj);
+                        }));
                     }
                 }
                 else
                 {
                     yield return new WaitForSeconds(5);
-                    StartCoroutine(FetchTaskStatus(taskId));
+                    StartCoroutine(FetchTaskStatus(taskId,(obj) =>
+                    {
+                        actionFTS(obj);
+                    }));
                 }
             }
         }
     }
 
-    IEnumerator Upscale(string taskId)
+    IEnumerator Upscale(string taskId, Action<CoroutineReturner> actionUS)
     {
         string url = "https://api.midjourneyapi.xyz/mj/v2/upscale";
         string apiKey = ApiKey;
@@ -233,6 +254,10 @@ public class Midjourney : MonoBehaviour
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.LogError(request.error);
+                CoroutineReturner temp = new CoroutineReturner();
+                temp.isSuccess = false;
+                temp.errorMessage = request.error;
+                actionUS(temp);
             }
             else
             {
@@ -240,34 +265,36 @@ public class Midjourney : MonoBehaviour
                 ApiResponseUpscale response = JsonUtility.FromJson<ApiResponseUpscale>(request.downloadHandler.text);
                 Debug.Log("Status: " + response.status);
                 currentStage = Stage.FetchingFinalImage;
-                StartCoroutine(FetchTaskStatus(response.task_id));
+                StartCoroutine(FetchTaskStatus(response.task_id, (obj) =>
+                {
+                    actionUS(obj);
+                }));
             }
         }
     }
 
-    
-    public void LoadAndApplyTexture(string url)
-    {
-        StartCoroutine(LoadTexture(url));
-    }
-
-    IEnumerator LoadTexture(string _url)
+    IEnumerator LoadTexture(string _url, Action<CoroutineReturner> actionLT)
     {
         using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(_url))
         {
             yield return uwr.SendWebRequest();
 
+            CoroutineReturner temp = new CoroutineReturner();
             if (uwr.result == UnityWebRequest.Result.Success)
             {
                 Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
                 //targetQuad.GetComponent<Renderer>().material.mainTexture = texture;
-                GameManager.instance.MidjourneyImageReceived(texture);
+                temp.isSuccess = true;
+                temp.generatedTexture = texture;
+                actionLT(temp);
             }
             else
             {
                 Debug.LogError($"Failed to load texture from {_url}: {uwr.error}");
+                temp.isSuccess = false;
+                temp.errorMessage = uwr.error;
+                actionLT(temp);
             }
-            GameManager.instance.HideLoadingPanel();
         }
     }
 
@@ -278,6 +305,7 @@ public class ImagineJson
 {
     public string prompt;
     public string process_mode;
+    public string aspect_ratio;
 }
 
 [System.Serializable]

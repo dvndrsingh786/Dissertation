@@ -1,133 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
+
+public enum GameState
+{
+    MenuScreen,
+    Gameplay,
+    GameEnd
+}
 
 public class GameManager : MonoBehaviour
 {
-
-    public bool isDalle;
-    public bool isMidjourney;
-    public string abc = "木头";
-
     public static GameManager instance;
-    public TMP_InputField promptInputField;
-    public TMP_InputField imageUrlField;
-
-    [Header("Room Moving")]
-    public int currentRoom = 1;
-    public GameObject rightBtn;
-    public GameObject leftBtn;
-    public TextMeshProUGUI roomNumberTxt;
-
-    [Header("Midjourney")]
-    [SerializeField] GameObject quadMR1;
-    [SerializeField] GameObject quadMR2;
-    [SerializeField] GameObject quadMR3;
-    [Header("DALL E")]
-    [SerializeField] GameObject quadDR1;
-    [SerializeField] GameObject quadDR2;
-    [SerializeField] GameObject quadDR3;
-
-    [Header("Loading Panel Objects")]
-    [SerializeField] GameObject loadingPanel;
-    [SerializeField] int loadingPanelOpeners = 0;
+    public GameState gameState;
+    public GameObject quadDR1;
 
     private void Awake()
     {
         instance = this;
-        rightBtn.SetActive(false);
+        AITools();
     }
 
-    #region Loading Panel Handler
-    public void ShowLoadingPanel()
+    void AITools()
     {
-        loadingPanelOpeners++;
-        loadingPanel.SetActive(true);
+        //StartCoroutine(DALLE.instance.GenerateImage("A dog flying", "1024x1024", (CoroutineReturner obj) =>
+        //  {
+        //      Debug.Log(obj.isSuccess);
+        //      if (obj.isSuccess)
+        //      {
+        //          quadDR1.GetComponent<Renderer>().material.mainTexture = obj.generatedTexture;
+        //      }
+        //      else
+        //      {
+        //          Debug.Log(obj.errorMessage);
+        //      }
+        //  }));
+        StartCoroutine(Midjourney.instance.GenerateImageFromPrompt("A dog flying", (CoroutineReturner obj) =>
+        {
+            Debug.Log(obj.isSuccess);
+            if (obj.isSuccess)
+            {
+                quadDR1.GetComponent<Renderer>().material.mainTexture = obj.generatedTexture;
+            }
+            else
+            {
+                Debug.Log(obj.errorMessage);
+            }
+        }));
     }
 
-    public void HideLoadingPanel()
-    {
-        loadingPanelOpeners--;
-        if (loadingPanelOpeners <= 0)
-        {
-            loadingPanelOpeners = 0;
-            loadingPanel.SetActive(false);
-        }
-    }
-    #endregion
+}
 
-    #region Image Processing
-
-    public void GenerateBtnClicked()
-    {
-        if(isMidjourney)
-        Midjourney.instance.GenerateImageStart();
-        if(isDalle)
-        DALLE.instance.GenerateImageStart();
-    }
-
-    public void MidjourneyImageReceived(Texture2D tex)
-    {
-        if (currentRoom == 1)
-        {
-            quadMR1.GetComponent<Renderer>().material.mainTexture = tex;
-        }
-        else if (currentRoom == 2)
-        {
-            quadMR2.GetComponent<Renderer>().material.mainTexture = tex;
-        }
-        else
-        {
-            quadMR3.GetComponent<Renderer>().material.mainTexture = tex;
-        }
-    }
-
-    public void DALLEImageReceived(Texture2D tex)
-    {
-        if (currentRoom == 1)
-        {
-            quadDR1.GetComponent<Renderer>().material.mainTexture = tex;
-        }
-        else if (currentRoom == 2)
-        {
-            quadDR2.GetComponent<Renderer>().material.mainTexture = tex;
-        }
-        else
-        {
-            quadDR3.GetComponent<Renderer>().material.mainTexture = tex;
-        }
-    }
-
-    
-
-    #endregion
-
-    public void SetRoomObjs()
-    {
-        if (currentRoom == 1)
-        {
-            rightBtn.SetActive(false);
-        }
-        else rightBtn.SetActive(true);
-        if(currentRoom == 2)
-        {
-            imageUrlField.gameObject.SetActive(true);
-            imageUrlField.text = "https://davdissertation.s3.eu-west-2.amazonaws.com/JoideepSir.PNG";
-        }
-        else
-        {
-            imageUrlField.gameObject.SetActive(false);
-        }
-        if (currentRoom == 3)
-        {
-            leftBtn.SetActive(false);
-        }
-        else leftBtn.SetActive(true);
-
-
-        
-        roomNumberTxt.text = "Room " + currentRoom.ToString();
-    }
-
+[System.Serializable]
+public class CoroutineReturner
+{
+    public bool isSuccess = false;
+    public string errorMessage = "ERROR!";
+    public Texture2D generatedTexture = null;
 }

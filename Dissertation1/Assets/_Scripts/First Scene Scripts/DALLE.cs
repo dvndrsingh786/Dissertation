@@ -24,31 +24,8 @@ public class DALLE : MonoBehaviour
 		instance = this;
 	}
 
-    public void GenerateImageStart()
+	public IEnumerator GenerateImage(string description, string resolution, Action<CoroutineReturner> action)
 	{
-		GameManager.instance.ShowLoadingPanel();
-
-		string description = GameManager.instance.promptInputField.text;
-		string resolution = "1024x1024"; // Possible Resolution 256x256, 512x512, or 1024x1024.
-										 //string resolution = "256x256"; // Possible Resolution 256x256, 512x512, or 1024x1024.
-		//resolution = "256x256"; //if DALL E 2
-		if (GameManager.instance.currentRoom == 1)
-		{
-			StartCoroutine(GenerateImage(description, resolution));
-		}
-		else if(GameManager.instance.currentRoom == 2)
-		{
-			StartCoroutine(EditImage(GameManager.instance.imageUrlField.text, description, resolution));
-		}
-		else
-		{
-
-		}
-	}
-
-	IEnumerator GenerateImage(string description, string resolution)
-	{
-
 		GenerateImageRequestModel reqModel = new GenerateImageRequestModel();
 		reqModel.model = "dall-e-3";
 		reqModel.prompt = description;
@@ -67,13 +44,15 @@ public class DALLE : MonoBehaviour
 			request.SetRequestHeader("Authorization", "Bearer " + ApiKey);
 			request.SetRequestHeader("OpenAI-Organization", ORGANIZATION_KEY);
 			yield return request.SendWebRequest();
-
 			if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
 			{
 				Debug.LogError(request.error);
 				Debug.Log("Response code: " + request.responseCode);
 				Debug.Log("Response body: " + request.downloadHandler.text);
-				GameManager.instance.HideLoadingPanel();
+				CoroutineReturner temp = new CoroutineReturner();
+				temp.isSuccess = false;
+				temp.errorMessage = request.error;
+				action(temp);
 			}
 			else
 			{
@@ -85,7 +64,10 @@ public class DALLE : MonoBehaviour
 				foreach (var item in myData.data)
 				{
 					Debug.Log($"URL: {item.url}");
-					LoadAndApplyTexture(item.url);
+					StartCoroutine(LoadTexture(item.url, (obj) =>
+					{
+						action(obj);
+					}));
 					break;
 				}
 			}
@@ -93,7 +75,7 @@ public class DALLE : MonoBehaviour
 	}
 
 
-    IEnumerator EditImage(string imageUrl, string description, string resolution)
+    public IEnumerator EditImage(string imageUrl, string description, string resolution, Action<CoroutineReturner> action)
     {
         WWWForm formData = new WWWForm();
         formData.AddField("prompt", description);
@@ -118,7 +100,10 @@ public class DALLE : MonoBehaviour
             Debug.Log("Error: " + request.error);
             Debug.Log("Response code: " + request.responseCode);
             Debug.Log("Response body: " + request.downloadHandler.text);
-			GameManager.instance.HideLoadingPanel();
+			CoroutineReturner temp = new CoroutineReturner();
+			temp.isSuccess = false;
+			temp.errorMessage = request.error;
+			action(temp);
 		}
 		else
         {
@@ -133,7 +118,10 @@ public class DALLE : MonoBehaviour
             foreach (var item in myData.data)
             {
                 Debug.Log($"URL: {item.url}");
-                LoadAndApplyTexture(item.url);
+                StartCoroutine(LoadTexture(item.url, (obj) =>
+				{
+					action(obj);
+				}));
                 break;
             }
         }
@@ -145,29 +133,33 @@ public class DALLE : MonoBehaviour
 		return Convert.ToBase64String(bArray);
 	}
 
-    public void LoadAndApplyTexture(string url)
+	IEnumerator LoadTexture(string _url, Action<CoroutineReturner> actionLT)
 	{
-		StartCoroutine(LoadTexture(url));
-	}
-
-	IEnumerator LoadTexture(string _url)
-	{
+		Debug.Log("Loading Texture");
 		using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(_url))
 		{
 			yield return uwr.SendWebRequest();
 
+			CoroutineReturner temp = new CoroutineReturner();
+
 			if (uwr.result == UnityWebRequest.Result.Success)
 			{
+				Debug.Log("Success");
 				Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
 				//targetQuad.GetComponent<Renderer>().material.mainTexture = texture;
-				GameManager.instance.DALLEImageReceived(texture);
 				//Utility.WriteImageOnDisk(_texture, System.DateTime.Now.Millisecond + "_createImg_" + i + "_.jpg");
+				temp.isSuccess = true;
+				temp.generatedTexture = texture;
+				Debug.Log("Alsmost acitjo");
+				actionLT(temp);
 			}
 			else
 			{
 				Debug.LogError($"Failed to load texture from {_url}: {uwr.error}");
+				temp.isSuccess = false;
+				temp.errorMessage = uwr.error;
+				actionLT(temp);
 			}
-			GameManager.instance.HideLoadingPanel();
 		}
 	}
 

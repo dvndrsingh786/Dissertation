@@ -8,10 +8,10 @@ public enum CameraState
     MovingToPosition
 }
 
-public class CameraController : MonoBehaviour
+public class CameraControllerFirstScene : MonoBehaviour
 {
 
-    public static CameraController instance;
+    public static CameraControllerFirstScene instance;
 
     [Header("Controls")]
     [SerializeField] float movementSpeed;
@@ -32,26 +32,26 @@ public class CameraController : MonoBehaviour
     public void MoveLeft()
     {
         if (currentState == CameraState.MovingToPosition) return;
-        if (GameManager.instance.currentRoom == 3) return;
-        GameManager.instance.currentRoom++;
+        if (GameManagerFirstScene.instance.currentRoom == 3) return;
+        GameManagerFirstScene.instance.currentRoom++;
         MoveToRoom();
     }
 
     public void MoveRight()
     {
         if (currentState == CameraState.MovingToPosition) return;
-        if (GameManager.instance.currentRoom == 1) return;
-        GameManager.instance.currentRoom--;
+        if (GameManagerFirstScene.instance.currentRoom == 1) return;
+        GameManagerFirstScene.instance.currentRoom--;
         MoveToRoom();
     }
 
     void MoveToRoom()
     {
-        if (GameManager.instance.currentRoom == 1)
+        if (GameManagerFirstScene.instance.currentRoom == 1)
         {
             targetPosition = room1Pos.position;
         }
-        else if (GameManager.instance.currentRoom == 2)
+        else if (GameManagerFirstScene.instance.currentRoom == 2)
         {
             targetPosition = room2Pos.position;
         }
@@ -70,7 +70,7 @@ public class CameraController : MonoBehaviour
             if (Vector3.Distance(transform.localPosition, targetPosition) < 0.01f)
             {
                 currentState = CameraState.AtPosition;
-                GameManager.instance.SetRoomObjs();
+                GameManagerFirstScene.instance.SetRoomObjs();
             }
         }
     }

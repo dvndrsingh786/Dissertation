@@ -48,7 +48,7 @@ public class GoogleVision : MonoBehaviour
         requests.requests = new List<AnnotateImageRequest>();
 
         AnnotateImageRequest request = new AnnotateImageRequest();
-        request.image = new Image();
+        request.image = new ImageForGoogleVision();
         request.image.content = base64;
         request.features = new List<Feature>();
         Feature feature = new Feature();
@@ -136,12 +136,12 @@ public class AnnotateImageRequests
 [System.Serializable]
 public class AnnotateImageRequest
 {
-    public Image image;
+    public ImageForGoogleVision image;
     public List<Feature> features;
 }
 
 [System.Serializable]
-public class Image
+public class ImageForGoogleVision
 {
     public string content;
 }
