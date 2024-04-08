@@ -6,25 +6,77 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager instance;
 
+    [Header("Backgrounds")]
     [SerializeField] Transform[] backgrounds;
-    [SerializeField] float backgroundSpeed = 1;
+    public float environmentSpeed = 1;
     [SerializeField] float lastPoint;
     [SerializeField] float initialPoint;
+    [Header("Fire & Other Objects")]
+    [SerializeField] GameObject firePrefab;
+    [SerializeField] Vector2[] objPositions;
+    List<int> usedPositions = new List<int>();
 
     private void Awake()
     {
         instance = this;
     }
 
+    private void Start()
+    {
+        InitialSetup();
+    }
+
+    void InitialSetup()
+    {
+        AddFire(backgrounds[backgrounds.Length - 1]);
+        AddFire(backgrounds[backgrounds.Length - 2]);
+    }
+
+    public void GameOver()
+    {
+        environmentSpeed = 0;
+    }
+
     private void Update()
     {
         foreach (var item in backgrounds)
         {
-            item.position -= new Vector3(1, 0, 0) * backgroundSpeed * Time.deltaTime;
+            item.position -= new Vector3(1, 0, 0) * environmentSpeed * Time.deltaTime;
             if (item.position.x < lastPoint)
             {
                 item.localPosition = new Vector3(initialPoint, item.localPosition.y, item.localPosition.z);
+                usedPositions = new List<int>();
+                RemoveFire(item);
+                AddFire(item);
             }
+        }
+    }
+
+    void AddFire(Transform parent)
+    {
+        int fireCount = Random.Range(1, 3);
+        if (fireCount > 0)
+        {
+            for (int i = 0; i < fireCount; i++)
+            {
+                GameObject fire = Instantiate(firePrefab, parent);
+                int positionIndex = Random.Range(0, objPositions.Length);
+                while (usedPositions.Contains(positionIndex))
+                {
+                    positionIndex = Random.Range(0, objPositions.Length);
+                }
+                fire.transform.localPosition = objPositions[positionIndex];
+                usedPositions.Add(positionIndex);
+            }
+        }
+    }
+
+    void RemoveFire(Transform parent)
+    {
+        List<GameObject> objs = new List<GameObject>();
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Destroy(parent.GetChild(0).gameObject);
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -16,10 +17,13 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
     public GameObject quadDR1;
 
+    [Header("Panels")]
+    [SerializeField] GameObject gameoverPanel;
+
     private void Awake()
     {
         instance = this;
-        AITools();
+        //AITools();
     }
 
     void AITools()
@@ -36,20 +40,29 @@ public class GameManager : MonoBehaviour
         //          Debug.Log(obj.errorMessage);
         //      }
         //  }));
-        StartCoroutine(Midjourney.instance.GenerateImageFromPrompt("A dog flying", (CoroutineReturner obj) =>
-        {
-            Debug.Log(obj.isSuccess);
-            if (obj.isSuccess)
-            {
-                quadDR1.GetComponent<Renderer>().material.mainTexture = obj.generatedTexture;
-            }
-            else
-            {
-                Debug.Log(obj.errorMessage);
-            }
-        }));
+        //StartCoroutine(Midjourney.instance.GenerateImageFromPrompt("A dog flying", (CoroutineReturner obj) =>
+        //{
+        //    Debug.Log(obj.isSuccess);
+        //    if (obj.isSuccess)
+        //    {
+        //        quadDR1.GetComponent<Renderer>().material.mainTexture = obj.generatedTexture;
+        //    }
+        //    else
+        //    {
+        //        Debug.Log(obj.errorMessage);
+        //    }
+        //}));
     }
 
+    public void GameOver()
+    {
+        gameoverPanel.SetActive(true);
+    }
+
+    public void MainMenuPanel()
+    {
+        SceneManager.LoadScene(1);
+    }
 }
 
 [System.Serializable]

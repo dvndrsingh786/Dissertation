@@ -1,0 +1,400 @@
+fileFormatVersion: 2
+guid: 58dcbd2fae79a421d8358c2f312b62fd
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 254
+        width: 147
+        height: 217
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b015c986eab0d4c36aeeefec694cd4f2
+      internalID: -968920679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 428
+        width: 22
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 358246b9a4c4346f8aa0447b8aabbd44
+      internalID: 2099366165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 254
+        width: 159
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccd451216794c4685bbb7fe0685ff27b
+      internalID: 2091339181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 254
+        width: 143
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2761403a6b0b4582861639bbd3b87e7
+      internalID: 1859445741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 412
+        width: 41
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c40b27b6b02e84330afaa38c3a5b4162
+      internalID: -906518420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 407
+        width: 59
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 316fbd509b2244b2c986f04cbbca0e0f
+      internalID: 1749215833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 397
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c064d3cd5d174ba3aa3d17533bb695e
+      internalID: -930922581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 400
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13f91d7745a4c41b7aceea302dea033a
+      internalID: -1476727592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_8
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 368
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92e6ce22c4520483e9fcacd864aa0735
+      internalID: 1002374809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_9
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 315
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2b40ebaaf2d045d5a62693a155b0b5d
+      internalID: -200969368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 35
+        width: 150
+        height: 206
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf8afe38c0180414989be121cd17fc3b
+      internalID: -1720062246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_11
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 35
+        width: 161
+        height: 205
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 453baa9abbbf840cc81813841b260399
+      internalID: -1320460862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_12
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 35
+        width: 161
+        height: 205
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a632d50f8f7f6467d9dbc7ced2d90fbd
+      internalID: -661706578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 083941d38a2274ce9a0bd7fc93cb0aac
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_0: -968920679
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_1: 2099366165
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_10: -1720062246
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_11: -1320460862
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_12: -661706578
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_2: 2091339181
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_3: 1859445741
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_4: -906518420
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_5: 1749215833
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_6: -930922581
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_7: -1476727592
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_8: 1002374809
+      DALLE2024-04-0717.39.17-Createasequenceoffourimagesdepictingvibrantstylizedflamessuitableforanimation.Eachimageshouldrepresentadistinctframeofalooping-ezgif.com-webp-to-png-converter-removebg-preview_9: -200969368
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
