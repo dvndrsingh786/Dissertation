@@ -206,6 +206,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5481701035122274872, guid: 70387be04a3dba4428b899e3a877079a, type: 3}
   m_PrefabInstance: {fileID: 517370253}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &102269957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 102269958}
+  m_Layer: 0
+  m_Name: Bullet Spawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &102269958
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102269957}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.59, y: 1.28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 517370254}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &116524924
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +692,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8015910331062749276, guid: 70387be04a3dba4428b899e3a877079a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 102269958}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5481701035122274872, guid: 70387be04a3dba4428b899e3a877079a, type: 3}
       insertIndex: -1
@@ -763,6 +797,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 500
+  canJump: 1
+  shootCooldownPeriod: 3
+  canShoot: 1
+  bulletPrefab: {fileID: 9042037032859889033, guid: 7f369fc4dc7b84aaca02b4568337805b, type: 3}
+  bulletSpawnPoint: {fileID: 102269958}
 --- !u!1 &644396025
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,6 +858,7 @@ MonoBehaviour:
   lastPoint: -30
   initialPoint: 62.8
   firePrefab: {fileID: 6247349901412504238, guid: a05286ec00090495bae3d14399973e64, type: 3}
+  obstaclePrefab: {fileID: 5463090250985281580, guid: 1f739736c7c624c2d98fa1cd74ec341a, type: 3}
   objPositions:
   - {x: 8.3, y: -2.4}
   - {x: 7.3, y: -2.4}
@@ -836,6 +876,7 @@ MonoBehaviour:
   - {x: 5, y: -2.4}
   - {x: 6, y: -2.4}
   - {x: 7, y: -2.4}
+  usedPositions: 
 --- !u!1 &691876072
 GameObject:
   m_ObjectHideFlags: 0
@@ -2000,7 +2041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d904cfb39ac49c8bb985d786f4bb72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 0
+  gameState: 1
   quadDR1: {fileID: 1881537454}
   gameoverPanel: {fileID: 458062461}
 --- !u!4 &1878571456
@@ -2136,7 +2177,7 @@ GameObject:
   - component: {fileID: 1998691657}
   m_Layer: 0
   m_Name: Ground Collider
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

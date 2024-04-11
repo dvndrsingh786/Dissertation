@@ -13,8 +13,9 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] float initialPoint;
     [Header("Fire & Other Objects")]
     [SerializeField] GameObject firePrefab;
+    [SerializeField] GameObject obstaclePrefab;
     [SerializeField] Vector2[] objPositions;
-    List<int> usedPositions = new List<int>();
+    [SerializeField] List<int> usedPositions = new List<int>();
 
     private void Awake()
     {
@@ -46,8 +47,9 @@ public class GameplayManager : MonoBehaviour
             {
                 item.localPosition = new Vector3(initialPoint, item.localPosition.y, item.localPosition.z);
                 usedPositions = new List<int>();
-                RemoveFire(item);
+                RemoveObjs(item);
                 AddFire(item);
+                AddObstacle(item);
             }
         }
     }
@@ -71,9 +73,20 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    void RemoveFire(Transform parent)
+    void AddObstacle(Transform parent)
     {
-        List<GameObject> objs = new List<GameObject>();
+        GameObject obstacle = Instantiate(obstaclePrefab, parent);
+        int positionIndex = Random.Range(0, objPositions.Length);
+        while (usedPositions.Contains(positionIndex))
+        {
+            positionIndex = Random.Range(0, objPositions.Length);
+        }
+        obstacle.transform.localPosition = objPositions[positionIndex];
+        usedPositions.Add(positionIndex);
+    }
+
+    void RemoveObjs(Transform parent)
+    {
         for (int i = 0; i < parent.childCount; i++)
         {
             Destroy(parent.GetChild(0).gameObject);

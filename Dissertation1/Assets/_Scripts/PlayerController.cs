@@ -6,8 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb;
     [SerializeField] float jumpForce = 1;
+    [SerializeField] bool canJump = true;
     int _playerHealth = 100;
-    [SerializeField] int playerHealth
+    [SerializeField] int PlayerHealth
     {
         get
         {
@@ -23,6 +24,11 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    [SerializeField] float shootCooldownPeriod = 1;
+    [SerializeField] bool canShoot = true;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Transform bulletSpawnPoint;
+
 
     private void Start()
     {
@@ -31,25 +37,49 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (transform.localPosition.y < 1.6)
-        {
-            PlayerInput();
-        }
+        PlayerInput();
     }
 
     void PlayerInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (GameManager.instance.gameState != GameState.Gameplay) return;
+        if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
-            rb.AddForce(Vector2.up * jumpForce);
+            if (transform.localPosition.y < 1.6)
+            {
+                rb.AddForce(Vector2.up * jumpForce);
+            }
+            else canJump = false;
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            if (canShoot)
+                Shoot();
         }
     }
 
+    void Shoot()
+    {
+        Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+        canShoot = false;
+        Invoke(nameof(EnableShooting), shootCooldownPeriod);
+    }
+
+    void EnableShooting() => canShoot = true;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<FireScript>())
+        if (collision.gameObject.CompareTag("Fire"))
         {
-            playerHealth = 0;
+            PlayerHealth = 0;
+        }
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            PlayerHealth -= collision.gameObject.GetComponent<ObstacleScript>().damage;
+        }
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            if (!canJump) canJump = true;
         }
     }
 }
