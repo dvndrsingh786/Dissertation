@@ -7,7 +7,7 @@ public class GoogleTranslate : MonoBehaviour
 {
 
     public static GoogleTranslate instance;
-    public string apiKey = "";
+    //public string apiKey = "";
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class GoogleTranslate : MonoBehaviour
 
     IEnumerator TranslateText(string textToTranslate, string sourceLang, string targetLang)
     {
-        string url = $"https://translation.googleapis.com/language/translate/v2?key={apiKey}";
+        string url = $"https://translation.googleapis.com/language/translate/v2?key={Keys.Google}";
 
         TranslationRequest request = new TranslationRequest
         {

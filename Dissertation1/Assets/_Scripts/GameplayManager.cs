@@ -50,6 +50,7 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.gameState != GameState.Gameplay) return;
         foreach (var item in backgrounds)
         {
             item.position -= new Vector3(1, 0, 0) * environmentSpeed * Time.deltaTime;

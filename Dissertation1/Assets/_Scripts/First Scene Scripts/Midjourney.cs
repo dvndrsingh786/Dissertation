@@ -17,7 +17,7 @@ public enum Stage
 
 public class Midjourney : MonoBehaviour
 {
-    [SerializeField] string ApiKey = "";
+    //[SerializeField] string ApiKey = "";
     [SerializeField] Stage currentStage;
     public static Midjourney instance;
 
@@ -30,7 +30,7 @@ public class Midjourney : MonoBehaviour
     {
         currentStage = Stage.Generating;
         string url = "https://api.midjourneyapi.xyz/mj/v2/imagine";
-        string apiKey = ApiKey;
+        string apiKey = Keys.Midjourney;
 
         ImagineJson abc = new ImagineJson();
         abc.prompt = prompt;
@@ -75,7 +75,7 @@ public class Midjourney : MonoBehaviour
         imageUrl = "https://davdissertation.s3.eu-west-2.amazonaws.com/1.png";
         currentStage = Stage.Generating;
         string url = "https://api.midjourneyapi.xyz/mj/v2/imagine";
-        string apiKey = ApiKey;
+        string apiKey = Keys.Midjourney;
 
         ImagineJson abc = new ImagineJson();
         //abc.prompt = prompt + " Image Url: " + imageUrl;
@@ -122,7 +122,7 @@ public class Midjourney : MonoBehaviour
         string imageUrl = "https://davdissertation.s3.eu-west-2.amazonaws.com/s-l1200-ezgif.com-webp-to-png-converter.png";
         currentStage = Stage.Generating;
         string url = "https://api.midjourneyapi.xyz/mj/v2/describe";
-        string apiKey = ApiKey;
+        string apiKey = Keys.Midjourney;
 
         DescribeJson abc = new DescribeJson();
         //abc.prompt = prompt + " Image Url: " + imageUrl;
@@ -235,7 +235,7 @@ public class Midjourney : MonoBehaviour
     IEnumerator Upscale(string taskId, Action<CoroutineReturner> actionUS)
     {
         string url = "https://api.midjourneyapi.xyz/mj/v2/upscale";
-        string apiKey = ApiKey;
+        string apiKey = Keys.Midjourney;
 
         UpscaleJson abc = new UpscaleJson();
         abc.origin_task_id = taskId;

@@ -9,7 +9,7 @@ public class GoogleVision : MonoBehaviour
 {
     public static GoogleVision instance;
     public string url = "https://vision.googleapis.com/v1/images:annotate?key=";
-    public string apiKey = ""; //Put your google cloud vision api key here
+    //public string apiKey = ""; //Put your google cloud vision api key here
     public FeatureType featureType = FeatureType.TEXT_DETECTION;
     public int maxResults = 10;
     public GameObject resPanel;
@@ -28,7 +28,7 @@ public class GoogleVision : MonoBehaviour
         headers = new Dictionary<string, string>();
         headers.Add("Content-Type", "application/json; charset=UTF-8");
 
-        if (apiKey == null || apiKey == "")
+        if (Keys.Google == null || Keys.Google == "")
             Debug.LogError("No API key. Please set your API key into the \"Web Cam Texture To Cloud Vision(Script)\" component.");
 
         //StartCoroutine(Capture());
@@ -60,7 +60,7 @@ public class GoogleVision : MonoBehaviour
         string jsonData = JsonUtility.ToJson(requests, false);
         if (jsonData != string.Empty)
         {
-            string url = this.url + this.apiKey;
+            string url = this.url + Keys.Google;
             byte[] postData = System.Text.Encoding.Default.GetBytes(jsonData);
             using (WWW www = new WWW(url, postData, headers))
             {

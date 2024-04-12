@@ -1004,7 +1004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc0344c9bb824dc29ae3260a685ae39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ApiKey: 
   ORGANIZATION_KEY: org-wr7avNWc2Yg2hctjjcNVstKb
   image: {fileID: 0}
   mask: {fileID: 0}
@@ -1969,7 +1968,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba3ce8e75b05e4cdfbc8ea282af822f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ApiKey: 
   currentStage: 0
 --- !u!1 &1209262147
 GameObject:
@@ -2713,7 +2711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d904cfb39ac49c8bb985d786f4bb72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 1
+  gameState: 0
   quadDR1: {fileID: 1881537454}
   gameoverPanel: {fileID: 458062461}
 --- !u!4 &1878571456

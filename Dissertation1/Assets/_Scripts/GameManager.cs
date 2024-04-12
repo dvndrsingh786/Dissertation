@@ -14,7 +14,7 @@ public enum GameState
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public GameState gameState;
+    public static GameState gameState;
     public GameObject quadDR1;
 
     [Header("Panels")]
@@ -70,5 +70,6 @@ public class CoroutineReturner
 {
     public bool isSuccess = false;
     public string errorMessage = "ERROR!";
+    public string successMsg = "";
     public Texture2D generatedTexture = null;
 }

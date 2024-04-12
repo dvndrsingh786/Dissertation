@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     void PlayerInput()
     {
-        if (GameManager.instance.gameState != GameState.Gameplay) return;
+        if (GameManager.gameState != GameState.Gameplay) return;
         if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
             if (transform.localPosition.y < 1.6)
