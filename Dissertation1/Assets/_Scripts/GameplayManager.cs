@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -16,6 +18,14 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] GameObject obstaclePrefab;
     [SerializeField] Vector2[] objPositions;
     [SerializeField] List<int> usedPositions = new List<int>();
+    [Header("Health And Score UI")]
+    [SerializeField] Image healthBar;
+    [SerializeField] TextMeshProUGUI healthValue;
+    [SerializeField] int score;
+    [SerializeField] TextMeshProUGUI scoreTxt;
+    [Header("Score Values")]
+    public static int fireScore = 10;
+    public static int obstacleScore = 30;
 
     private void Awake()
     {
@@ -91,5 +101,17 @@ public class GameplayManager : MonoBehaviour
         {
             Destroy(parent.GetChild(0).gameObject);
         }
+    }
+
+    public void SetHealthUI(int _health)
+    {
+        healthBar.fillAmount = _health;
+        healthValue.text = _health.ToString();
+    }
+
+    public void AddScore(int _scoreToAdd)
+    {
+        score += _scoreToAdd;
+        scoreTxt.text = "Score: " + score;
     }
 }

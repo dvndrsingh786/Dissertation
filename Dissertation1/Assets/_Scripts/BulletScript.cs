@@ -16,6 +16,13 @@ public class BulletScript : MonoBehaviour
         Debug.Log(collision.gameObject.name);
         if (collision.gameObject.CompareTag("Fire"))
         {
+            GameplayManager.instance.AddScore(GameplayManager.fireScore);
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            GameplayManager.instance.AddScore(GameplayManager.obstacleScore);
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }

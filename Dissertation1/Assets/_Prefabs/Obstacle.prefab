@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpInterval: 2
-  jumpForceMin: {x: -4, y: 4}
-  jumpForceMax: {x: -4, y: 4}
+  jumpForceMin: {x: -4, y: 6}
+  jumpForceMax: {x: -4, y: 9}
   rb: {fileID: 0}
   damage: 10

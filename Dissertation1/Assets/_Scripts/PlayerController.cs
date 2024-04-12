@@ -16,7 +16,9 @@ public class PlayerController : MonoBehaviour
         }
         set
         {
+            if (value < 0) return;
             _playerHealth = value;
+            GameplayManager.instance.SetHealthUI(_playerHealth);
             if (_playerHealth <= 0)
             {
                 GameplayManager.instance.GameOver();
@@ -76,6 +78,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             PlayerHealth -= collision.gameObject.GetComponent<ObstacleScript>().damage;
+            Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Ground"))
         {
