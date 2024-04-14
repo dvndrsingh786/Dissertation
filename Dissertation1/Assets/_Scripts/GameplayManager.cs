@@ -9,7 +9,7 @@ public class GameplayManager : MonoBehaviour
     public static GameplayManager instance;
 
     [Header("Backgrounds")]
-    [SerializeField] Transform[] backgrounds;
+    public Transform[] backgrounds;
     public float environmentSpeed = 1;
     [SerializeField] float lastPoint;
     [SerializeField] float initialPoint;
@@ -86,6 +86,14 @@ public class GameplayManager : MonoBehaviour
 
     void AddObstacle(Transform parent)
     {
+        Sprite obstacleSprite = null;
+        if (GameManager.instance.currentAIIndex == 0)
+        {
+            obstacleSprite = GameManager.instance.dallEImages[1];
+            Debug.Log("Obstacle given");
+        }
+        if (obstacleSprite == null) return;
+        Debug.Log("Obstacle not null");
         GameObject obstacle = Instantiate(obstaclePrefab, parent);
         int positionIndex = Random.Range(0, objPositions.Length);
         while (usedPositions.Contains(positionIndex))

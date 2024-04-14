@@ -26,7 +26,7 @@ public class Midjourney : MonoBehaviour
         instance = this;
     }
 
-    public IEnumerator GenerateImageFromPrompt(string prompt, Action<CoroutineReturner> action)
+    public IEnumerator GenerateImageFromPrompt(string prompt, string aspect_ratio, Action<CoroutineReturner> action)
     {
         currentStage = Stage.Generating;
         string url = "https://api.midjourneyapi.xyz/mj/v2/imagine";
@@ -35,7 +35,7 @@ public class Midjourney : MonoBehaviour
         ImagineJson abc = new ImagineJson();
         abc.prompt = prompt;
         abc.process_mode = "relax";
-        abc.aspect_ratio = "7:4";
+        abc.aspect_ratio = aspect_ratio;
 
         string jsonn = JsonUtility.ToJson(abc);
         Debug.Log(jsonn);

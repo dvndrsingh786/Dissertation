@@ -170,11 +170,13 @@ public class DALLE : MonoBehaviour
 					else flagDescription = "Content flagged under category: " + flagCategory;
 					Debug.Log(flagDescription);
 					temp.successMsg = flagDescription;
+					temp.isValidContent = false;
 				}
 				else
 				{
 					Debug.Log("Content passed moderation checks.");
 					temp.successMsg = "Content passed moderation checks.";
+					temp.isValidContent = true;
 				}
 				_action(temp);
 			}
@@ -249,7 +251,7 @@ public class DALLE : MonoBehaviour
 				//Utility.WriteImageOnDisk(_texture, System.DateTime.Now.Millisecond + "_createImg_" + i + "_.jpg");
 				temp.isSuccess = true;
 				temp.generatedTexture = texture;
-				Debug.Log("Alsmost acitjo");
+				Debug.Log("Almost acitjo");
 				actionLT(temp);
 			}
 			else

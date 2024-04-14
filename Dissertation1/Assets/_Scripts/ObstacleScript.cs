@@ -21,13 +21,4 @@ public class ObstacleScript : MonoBehaviour
         Vector2 jumpForce = new Vector2(Random.Range(jumpForceMin.x, jumpForceMax.x), Random.Range(jumpForceMin.y, jumpForceMax.y));
         rb.AddForce(jumpForce, ForceMode2D.Impulse);
     }
-
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Bullet"))
-    //    {
-    //        Destroy(collision.gameObject);
-    //        Destroy(gameObject);
-    //    }
-    //}
 }

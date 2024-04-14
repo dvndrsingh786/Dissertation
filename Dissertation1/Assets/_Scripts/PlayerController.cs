@@ -73,10 +73,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Fire"))
         {
+            Debug.Log("Fire Hit");
             PlayerHealth = 0;
         }
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+            Debug.Log("Obstacle Hit: " + collision.gameObject.GetComponent<ObstacleScript>().damage);
             PlayerHealth -= collision.gameObject.GetComponent<ObstacleScript>().damage;
             Destroy(collision.gameObject);
         }
