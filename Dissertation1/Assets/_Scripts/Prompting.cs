@@ -33,6 +33,32 @@ public class Prompting : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        LoadPlayerPrefs();
+    }
+
+    void LoadPlayerPrefs()
+    {
+        if (PlayerSave.HasThemeData())
+        {
+            string[] themeData = PlayerSave.GetThemeData();
+            themeIP.text = themeData[0];
+            timeOfDayIP.text = themeData[1];
+            weatherIP.text = themeData[2];
+            domColorIP.text = themeData[3];
+            specialFeatureIP.text = themeData[4];
+            isThemeSet = true;
+        }
+        if (PlayerSave.HasObstacleData())
+        {
+            string[] obstacleData = PlayerSave.GetObstacleData();
+            obstacle1IP.text = obstacleData[0];
+            obstacle2IP.text = obstacleData[1];
+            isObstacleSet = true;
+        }
+    }
+
     public bool PromptsReady()
     {
         return isThemeSet && isObstacleSet;
@@ -92,6 +118,7 @@ public class Prompting : MonoBehaviour
         else
         {
             isThemeSet = true;
+            PlayerSave.SaveThemeData(themeIP.text, timeOfDayIP.text, weatherIP.text, domColorIP.text, specialFeatureIP.text);
             themePanel.SetActive(false);
         }
     }
@@ -108,6 +135,7 @@ public class Prompting : MonoBehaviour
         }
         else
         {
+            PlayerSave.SaveObstacleData(obstacle1IP.text, obstacle2IP.text);
             isObstacleSet = true;
             obstaclePanel.SetActive(false);
         }

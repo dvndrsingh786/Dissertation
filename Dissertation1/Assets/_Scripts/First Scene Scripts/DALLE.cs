@@ -21,9 +21,15 @@ public class DALLE : MonoBehaviour
 	[SerializeField] Texture2D mask;
 	public static DALLE instance;
 
-    private void Awake()
-    {
-		instance = this;
+	private void Awake()
+	{
+		if (instance == null) instance = this;
+		else if (instance != this)
+		{
+			Destroy(gameObject);
+			return;
+		}
+		DontDestroyOnLoad(gameObject);
 	}
 
 	public IEnumerator GenerateImage(string description, string resolution, Action<CoroutineReturner> action)
@@ -266,13 +272,13 @@ public class DALLE : MonoBehaviour
 
 
 
-	//private void WriteImageOnDisk(Texture2D texture, string fileName)
-	//{
-	//	byte[] textureBytes = texture.EncodeToPNG();
-	//	string path = Application.persistentDataPath + fileName;
-	//	File.WriteAllBytes(path, textureBytes);
-	//	Debug.Log("File Written On Disk! " + path);
-	//}
+    public void WriteImageOnDisk(Texture2D texture, string fileName)
+    {
+        byte[] textureBytes = texture.EncodeToPNG();
+        string path = Application.dataPath + fileName;
+        File.WriteAllBytes(path, textureBytes);
+        Debug.Log("File Written On Disk! " + path);
+    }
 }
 
 

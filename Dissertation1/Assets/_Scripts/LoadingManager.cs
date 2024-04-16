@@ -39,6 +39,11 @@ public class LoadingManager : MonoBehaviour
         loadingCaptionText.text += loadingCaption;
     }
 
+    public void SetCaptionOfLoadingPanel(string loadingCaption)
+    {
+        loadingCaptionText.text = loadingCaption;
+    }
+
     public void HideLoadingPanel()
     {
         loadingPanelOpeners--;

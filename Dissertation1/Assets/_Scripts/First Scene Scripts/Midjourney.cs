@@ -23,7 +23,13 @@ public class Midjourney : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null) instance = this;
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
     public IEnumerator GenerateImageFromPrompt(string prompt, string aspect_ratio, Action<CoroutineReturner> action)

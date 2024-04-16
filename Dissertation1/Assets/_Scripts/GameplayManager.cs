@@ -95,6 +95,7 @@ public class GameplayManager : MonoBehaviour
         if (obstacleSprite == null) return;
         Debug.Log("Obstacle not null");
         GameObject obstacle = Instantiate(obstaclePrefab, parent);
+        obstacle.GetComponent<SpriteRenderer>().sprite = obstacleSprite;
         int positionIndex = Random.Range(0, objPositions.Length);
         while (usedPositions.Contains(positionIndex))
         {
@@ -114,7 +115,7 @@ public class GameplayManager : MonoBehaviour
 
     public void SetHealthUI(int _health)
     {
-        healthBar.fillAmount = _health;
+        healthBar.fillAmount = _health/100f;
         healthValue.text = _health.ToString();
     }
 
